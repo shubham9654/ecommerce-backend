@@ -2,7 +2,7 @@ const express = require('express');
 const connectDB = require('./db/connect');
 require('dotenv').config();
 
-// init express
+// express init
 const app = express();
 
 // middleware
@@ -16,7 +16,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 
 const start = async () => {
     try {

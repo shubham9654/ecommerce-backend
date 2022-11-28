@@ -22,24 +22,25 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { username, password } = req.body
-    const user = await User.findOne({ username })
-
-    const hashPassword = await bcrypt.compare(password, user.password)
-
-    if (user && hashPassword) {
-      const accessToken = jwt.sign({
-        id: user._id,
-        isAdmin: user.isAdmin
-      }, process.env.JWT_SECRET_KEY, { expiresIn: "2d"})
-
-      const { password, ...rest } = user._doc;
-      res.status(200).json({ status: "success", user: rest, accessToken });
+    const user = await User.findOne({ username: req.body.username })
+    
+    if (user) {
+      const hashPassword = await bcrypt.compare(req.body.password, user.password)
+      if (hashPassword) {
+        const accessToken = jwt.sign({
+          id: user._id,
+          isAdmin: user.isAdmin
+        }, process.env.JWT_SECRET_KEY, { expiresIn: "2d"})
+        const { password, ...rest } = user._doc;
+        res.status(200).json({ status: "success", user: rest, accessToken });
+      } else {
+        res.status(401).json({ status: "fail", errMsg: "wrong credentials" });
+      }
     } else {
-      res.status(401).json({ status: "fail", errMsg: "wrong credentials" });
+      res.status(401).json({ status: "fail", errMsg: "wrong username" });
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).json({ errMsg: err });
   }
 }
