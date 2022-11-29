@@ -67,6 +67,7 @@ const deleteUser = async (req, res) => {
   }
 }
 
+// need to understand later
 const getUserStatus = async (req, res) => {
   const date = new Date();
   const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));

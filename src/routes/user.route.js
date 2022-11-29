@@ -6,7 +6,6 @@ const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('../middlew
 
 router.route('/status').get(verifyTokenAndAdmin, getUserStatus);
 router.route('/').get(verifyTokenAndAdmin, getAllUsers);
-router.route('/:id').get(verifyTokenAndAdmin, getUser);
-router.route('/:id').patch(verifyTokenAndAuthorization, updateUser).delete(verifyTokenAndAuthorization, deleteUser);
+router.route('/:id').get(verifyTokenAndAdmin, getUser).patch(verifyTokenAndAuthorization, updateUser).delete(verifyTokenAndAuthorization, deleteUser);
 
 module.exports = router;
