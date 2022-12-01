@@ -8,7 +8,7 @@
     "node": "18.12.1"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon ./src/app.js"
   },
   "author": "shubham",
   "license": "ISC",
