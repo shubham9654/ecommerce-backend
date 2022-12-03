@@ -16,12 +16,14 @@ const userRoutes = require("./routes/user.route");
 const productRoutes = require("./routes/product.route");
 const cartRoutes = require("./routes/cart.route");
 const orderRoutes = require("./routes/order.route");
+const paymentRoutes = require("./routes/payment.route");
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/carts', cartRoutes);
 app.use('/api/v1/orders', orderRoutes);
+app.use('/api/v1/payments', paymentRoutes);
 
 const port = process.env.PORT || 3000;
 

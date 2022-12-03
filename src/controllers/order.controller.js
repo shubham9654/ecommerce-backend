@@ -10,7 +10,6 @@ const getOrder = async (req, res) => {
       res.status(404).json({ status: "fail", msg: "order not found!" });
     }
   } catch (err) {
-    console.lo
     res.status(500).json({ errMsg: err });
   }
 }
