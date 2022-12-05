@@ -6,15 +6,21 @@ const registerUser = async (req, res) => {
   try {
     const { name, username, email, password, isAdmin=false } = req.body
     const hashPassword = await bcrypt.hash(password, 10)
-    const user = await User.create({
-      name,
-      username,
-      email,
-      password: hashPassword,
-      isAdmin
-    });
-    if (user) {
-      res.status(200).json({ status: "success" });
+
+    const existUser = await User.findOne({ username: req.body.username })
+    if (existUser) {
+      res.status(403).json({ status: "fail", msg: 'username already exist!', wrongValue: 'username' });
+    } else {
+      const newUser = await User.create({
+        name,
+        username,
+        email,
+        password: hashPassword,
+        isAdmin
+      });
+      if (newUser) {
+        res.status(200).json({ status: "success", user: newUser });
+      }
     }
   } catch (err) {
     res.status(500).json({ errMsg: err });
