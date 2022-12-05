@@ -12,13 +12,13 @@ const createPayment = async (req, res) => {
           description: item.desc,
           metadata: {
             id: item._id,
-            size: item.size,
-            color: item.color,
+            size: item.selectedSize,
+            color: item.selectedColor,
           }
         },
         unit_amount: extractNum(item.price) * 100
       },
-      quantity: item?.quantity || 1,
+      quantity: item?.selectedQuantity || 1,
     }))
 
     const session = await stripe.checkout.sessions.create({
