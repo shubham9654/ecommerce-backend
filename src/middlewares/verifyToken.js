@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
   try {
-    const authToken = req.headers?.token?.split(' ') && req.headers.token.split(' ')[1];
+    const authToken = req.headers?.authorization?.split(' ') && req.headers.authorization.split(' ')[1];
     if (authToken) {
       jwt.verify(authToken, process.env.JWT_SECRET_KEY, (err, user) => {
         if (err) res.status(403).json({ errMsg: "Invalid Token!" })
@@ -21,7 +21,7 @@ const verifyToken = (req, res, next) => {
 const verifyTokenAndAuthorization = (req, res, next) => {
   try {
     verifyToken(req, res, () => {
-      if (req.user.id === req.params.id || req.user.isAdmin) {
+      if (req.user.id === req.body.userId || req.user.isAdmin) {
         next();
       } else {
         res.status(403).json({ errMsg: "user not allowed"})
